@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import defaultStyle from '../config/defaultStyle';
+import defaultStyle from '../../config/defaultStyle';
 import IndexFeed from './IndexFeed';
 
 function SongCombo({title, DATAS}) {

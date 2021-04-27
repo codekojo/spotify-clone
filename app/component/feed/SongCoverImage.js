@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image} from 'react-native';
-import defaultStyle from '../config/defaultStyle';
+import defaultStyle from '../../config/defaultStyle';
 
 function SongCoverImage({imageURL}) {
   return (

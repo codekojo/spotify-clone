@@ -1,7 +1,7 @@
 import React from 'react';
-import SongCoverImage from './SongCoverImage';
 import {View, Text} from 'react-native';
 import SongCoverInfo from './SongCoverInfo';
+import SongCoverImage from './SongCoverImage';
 
 function SongDescription({image, artistName, album}) {
   return (
