@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
-import colors from '../../config/colors';
 import Content from './Content';
 import Cover from './Cover';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Switch} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
 
@@ -62,7 +62,7 @@ function Content({
       </View>
 
       <View style={styles.header}>
-        <Header {...{val, artist}} />
+        <Header {...{val, artist, coverName, albumName}} />
         <ShufflePlay />
       </View>
       <Animated.View
@@ -74,6 +74,7 @@ function Content({
           paddingHorizontal: 15,
           marginTop: 10,
           backgroundColor: 'black',
+          paddingVertical: 15,
         }}>
         <Animated.Text
           style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
@@ -134,9 +135,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   header: {
-    marginTop: -BUTTON_HEIGHT + 5,
-    // marginBottom: -15,
-    backgroundColor: 'black',
+    marginTop: -BUTTON_HEIGHT,
+    marginBottom: -15,
+    // backgroundColor: 'black',
   },
   tracks: {
     paddingTop: 2,
