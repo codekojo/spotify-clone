@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Switch} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
 
@@ -10,10 +10,16 @@ import Track from './Track';
 import ShufflePlay, {BUTTON_HEIGHT} from './ShufflePlay';
 import Header from './Header';
 import SongCoverImage from '../feed/SongCoverImage';
+import colors from '../../config/colors';
+import SavedPlaylist from './SavedPlaylist';
+import SwitchUI from '../SwitchUI';
 
 const {interpolateNode, Extrapolate} = Animated;
 
-function Content({album: {artist, tracks, imgCover}, val}) {
+function Content({
+  album: {artist, tracks, imgCover, albumName, coverName},
+  val,
+}) {
   const height = interpolateNode(val, {
     inputRange: [-MAX_HEADER_HEIGHT, -BUTTON_HEIGHT / 2],
     outputRange: [0, MAX_HEADER_HEIGHT + BUTTON_HEIGHT],
@@ -24,6 +30,9 @@ function Content({album: {artist, tracks, imgCover}, val}) {
     outputRange: [0, 1, 0],
     extrapolate: Extrapolate.CLAMP,
   });
+
+  const [isEnabled, setIsEnabled] = React.useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <Animated.ScrollView
       onScroll={onScrollEvent({y: val})}
@@ -37,16 +46,17 @@ function Content({album: {artist, tracks, imgCover}, val}) {
             style={StyleSheet.absoluteFill}
             start={{x: 0, y: 0.3}}
             end={{x: 0, y: 1}}
-            colors={['transparent', 'rgba(0, 0, 0, 0.2)', 'black']}
+            colors={['transparent', 'rgba(0, 0, 0, 0.2)', colors.lightgrey]}
           />
         </Animated.View>
         <View style={styles.artistContainer}>
           <SongCoverImage imageURL={imgCover} />
-          <Animated.Text style={[styles.artist, {opacity}]}>
-            {artist}
+          <Animated.Text style={[styles.album, {opacity}]}>
+            {albumName}
           </Animated.Text>
+          <SavedPlaylist />
           <Animated.Text style={[styles.artist, {opacity}]}>
-            ALBUM BY {artist}
+            ALBUM BY {artist || coverName}
           </Animated.Text>
         </View>
       </View>
@@ -55,9 +65,31 @@ function Content({album: {artist, tracks, imgCover}, val}) {
         <Header {...{val, artist}} />
         <ShufflePlay />
       </View>
+      <Animated.View
+        style={{
+          color: 'white',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItemss: 'center',
+          paddingHorizontal: 15,
+          marginTop: 10,
+          backgroundColor: 'black',
+        }}>
+        <Animated.Text
+          style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
+          Download
+        </Animated.Text>
+        <SwitchUI
+          trackColor={{false: '#767577', true: colors.green}}
+          thumbColor={isEnabled ? colors.lightgreen : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      </Animated.View>
       <View style={styles.tracks}>
         {tracks.map((track, key) => (
-          <Track index={key + 1} {...{track, key, artist}} />
+          <Track index={key + 1} {...{track, key, artist, coverName}} />
         ))}
       </View>
     </Animated.ScrollView>
@@ -74,6 +106,7 @@ const styles = StyleSheet.create({
   cover: {
     height: MAX_HEADER_HEIGHT - BUTTON_HEIGHT,
     marginVertical: 50,
+    // backgroundColor: 'red',
   },
   gradient: {
     position: 'absolute',
@@ -86,22 +119,30 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'red',
   },
   artist: {
     textAlign: 'center',
     color: 'white',
-    fontSize: 48,
     fontWeight: 'bold',
+    textTransform: 'uppercase',
+    fontSize: 10,
+    paddingBottom: 30,
+  },
+  album: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 30,
   },
   header: {
-    marginTop: -BUTTON_HEIGHT,
-    marginBottom: -15,
+    marginTop: -BUTTON_HEIGHT + 5,
+    // marginBottom: -15,
+    backgroundColor: 'black',
   },
   tracks: {
     paddingTop: 2,
     // paddingTop: 32,
     backgroundColor: 'black',
+    // backgroundColor: colors.black,
+    marginBottom: 50,
   },
 });

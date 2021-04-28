@@ -5,7 +5,7 @@ import IndexFeed from './IndexFeed';
 
 function SongCombo({title, DATAS}) {
   return (
-    <View style={{marginVertical: 25}}>
+    <View style={{marginBottom: 55}}>
       <Text style={defaultStyle.playlistTitle}>{title}</Text>
       <IndexFeed data={DATAS} />
     </View>

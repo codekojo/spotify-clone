@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
+import colors from '../../config/colors';
 import {MAX_HEADER_HEIGHT, HEADER_DELTA} from './Model';
 import {BUTTON_HEIGHT} from './ShufflePlay';
 
@@ -23,7 +24,7 @@ function Cover({imageCover, val}) {
       <Animated.View
         style={{
           ...StyleSheet.absoluteFillObject,
-          backgroundColor: 'black',
+          backgroundColor: colors.black,
           opacity,
         }}
       />

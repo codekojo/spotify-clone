@@ -1,3 +1,5 @@
+import colors from './colors';
+
 export default {
   imageSongCover: {
     height: 170,
@@ -19,8 +21,9 @@ export default {
     textTransform: 'capitalize',
   },
   secondTitle: {
-    color: 'white',
     textAlign: 'center',
     textTransform: 'capitalize',
+    color: colors.grey,
+    fontWeight: 'bold',
   },
 };
